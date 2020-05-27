@@ -9,9 +9,8 @@ import {ContactService} from '../service/contact.service';
   styleUrls: ['./contact-item.component.css']
 })
 export class ContactItemComponent implements OnInit {
-/*
   @Input()
-  contact: Contact;*/
+  contact: Contact;
 
   @Input()
   contacts: Contact[];
@@ -20,8 +19,8 @@ export class ContactItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.contactService.getContacts()
-      .subscribe(value => this.contacts = value);*/
+    this.contactService.getContacts()
+      .subscribe(value => this.contacts = value);
   }
 
 }
