@@ -16,8 +16,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.contactService.getAll();
-     /*this.contactService.getContacts()
-      .subscribe(value => this.contacts = value);*/
+   // this.contactService.getAll()
+     this.contactService.getContacts()
+      .subscribe(value => this.contacts = value);
   }
 }

@@ -19,8 +19,8 @@ export class ContactItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactService.getContacts()
-      .subscribe(value => this.contacts = value);
+    /*this.contactService.getContacts()
+      .subscribe(value => this.contacts = value);*/
   }
 
 }

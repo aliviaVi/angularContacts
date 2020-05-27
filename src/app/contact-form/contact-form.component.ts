@@ -13,21 +13,22 @@ export class ContactFormComponent implements OnInit {
   contacts: Contact[];
 
   isAddingState: boolean;
-  private contactService: ContactService;
 
-  constructor(contactService: ContactService) {
-    this.contactService = contactService;
+
+  constructor(private contactService: ContactService) {
+
   }
 
   ngOnInit(): void {
     this.isAddingState = true;
     this.contact = new Contact();
-    this.contact.id = 1;
   }
   onClickAdd(){
     console.log(this.contact);
     this.contactService.addContact(this.contact)
-      .subscribe(value => this.contact = value);
+    this.clearForm();
+
+     // .subscribe(value => this.clearForm());
   }
 
   /*onClickAdd() {
@@ -40,8 +41,8 @@ export class ContactFormComponent implements OnInit {
 
 
   onClickGetAll() {
-
-    this.contactService.getContacts().subscribe(value => this.contacts = value);
+    this.contactService.getContacts()
+      .subscribe(value => this.contacts = value);
     console.log(this.contacts);
   }
 }

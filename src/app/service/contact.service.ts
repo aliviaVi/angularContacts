@@ -3,10 +3,14 @@ import {Injectable} from '@angular/core';
 import {Contact} from '../model/contact';
 import {Observable, of} from 'rxjs';
 import {CONTACTS} from '../model/contacts-mock';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class ContactService {
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   private readonly contactsUrl: string;
 
@@ -19,7 +23,7 @@ export class ContactService {
   }
 
   public addContact(contact: Contact){
-    return this.http.post<Contact>(this.contactsUrl + '/contact', contact);
+    return this.http.post<Contact>(this.contactsUrl + '/contact', contact, this.httpOptions);
   }
 
   add(contact: Contact): void {
