@@ -5,6 +5,7 @@ import {Observable, of} from 'rxjs';
 import {CONTACTS} from '../model/contacts-mock';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
+
 @Injectable()
 export class ContactService {
 
@@ -29,7 +30,10 @@ export class ContactService {
 
   public addContact(contact: Contact): void {
      this.http.post<Contact>(this.contactsUrl + '/contact', contact, this.httpOptions)
-       .subscribe(value => this.reloadContacts());
+       .subscribe(value => this.reloadContacts(),error => {
+         console.log(error)
+
+       });
   }
 
   private reloadContacts(){
@@ -46,19 +50,22 @@ export class ContactService {
   }
 
   edit(contact: Contact) {
-  /*const contactToEdit = CONTACTS.find(value => value.id === contact.id);
-    Object.assign(contactToEdit, contact);*/
+    /*const contactToEdit = CONTACTS.find(value => value.id === contact.id);
+      Object.assign(contactToEdit, contact);*/
 
     this.http.put<Contact>(this.contactsUrl + '/contact', contact, this.httpOptions)
-      .subscribe(value => this.reloadContacts());
+      .subscribe(value => this.reloadContacts(), error => {
+        console.log(error)
+      });
   }
-
   remove(contactId: number) {
     /*const index = CONTACTS.findIndex(value => value.id === contact.id);
     CONTACTS.slice(index, 1);*/
 
-     this.http.delete(this.contactsUrl + '/contact/' + contactId, this.httpOptions )
-       .subscribe(value => this.reloadContacts());
+    this.http.delete(this.contactsUrl + '/contact/' + contactId, this.httpOptions)
+      .subscribe(value => this.reloadContacts(), error => {
+        console.log(error)
 
+      });
   }
 }
