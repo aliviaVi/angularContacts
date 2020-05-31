@@ -3,15 +3,15 @@
     <button class="col s12 waves-effect waves-light btn blue darken-1"  (click)="onClickAdd()" [class.hide]="!isAddingState">
       Add
     </button>
-    <button class="col s12 waves-effect waves-light btn blue darken-1" (click)="onClickGetAll()">
-      get all
-    </button>
     <!--  .hide - is a class from materialize to hide elements  -->
-    <button class="col s12 waves-effect waves-light btn blue darken-1" [class.hide]="isAddingState">Edit
+    <button class="col s12 waves-effect waves-light btn blue darken-1" [class.hide]="isAddingState"
+    (click)="onClickEdit()"
+    >Edit
     </button>
   </div>
   <div class="col s1">
-    <button class="col s12 waves-effect waves-light btn blue darken-1" [class.hide]="isAddingState">Cancel
+    <button class="col s12 waves-effect waves-light btn blue darken-1" [class.hide]="isAddingState"
+                 (click)="onClickCancel()">Cancel
     </button>
   </div>
   <div class="col s1">

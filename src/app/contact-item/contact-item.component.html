@@ -1,13 +1,13 @@
 <li class="collection-item">
   <div>
-    <a href >
-      <span *ngFor="let contactFromServer of contacts">{{contactFromServer.name}}
-        {{contactFromServer.lastName}}</span>
+    <a href>
+      <span> {{contact.name}} {{contact.lastName}} {{contact.age}}
+        </span>
     </a>
     <span class="secondary-content">
-      <a >
-        <i class="material-icons teal-text text-darken-1">create</i></a>
-      <a >
+      <a (click)="OnClickEdit()">
+        <i class="material-icons teal-text text-darken-1">edit</i></a>
+      <a (click)="onClickDelete()" >
         <i class="material-icons  deep-orange-text text-darken-1">delete</i>
       </a>
     </span>
@@ -17,18 +17,3 @@
 
 
 
-<!--
-<li class="collection-item">
-  <div>
-    <a href>
-      <span>{{contact.name}} {{contact.lastName}}</span>
-    </a>
-    <span class="secondary-content">
-      <a href>
-        <i class="material-icons teal-text text-darken-1">create</i></a>
-      <a href>
-        <i class="material-icons  deep-orange-text text-darken-1">delete</i>
-      </a>
-    </span>
-  </div>
-</li>-->

@@ -8,6 +8,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 @Injectable()
 export class ContactService {
 
+  contacts: Observable<Contact[]>;
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -19,11 +21,19 @@ export class ContactService {
   }
 
   public getContacts(): Observable<Contact[]>{
-    return this.http.get<Contact[]>(this.contactsUrl + '/contact');
+    if(!this.contacts){
+     this.contacts= this.http.get<Contact[]>(this.contactsUrl + '/contact');
+    }
+    return this.contacts;
   }
 
-  public addContact(contact: Contact){
-    return this.http.post<Contact>(this.contactsUrl + '/contact', contact, this.httpOptions);
+  public addContact(contact: Contact): void {
+     this.http.post<Contact>(this.contactsUrl + '/contact', contact, this.httpOptions)
+       .subscribe(value => this.reloadContacts());
+  }
+
+  private reloadContacts(){
+    this.contacts= this.http.get<Contact[]>(this.contactsUrl + '/contact');
   }
 
   add(contact: Contact): void {
@@ -33,5 +43,22 @@ export class ContactService {
 
   getAll(): Observable<Contact[]> {
     return of(CONTACTS);
+  }
+
+  edit(contact: Contact) {
+  /*const contactToEdit = CONTACTS.find(value => value.id === contact.id);
+    Object.assign(contactToEdit, contact);*/
+
+    this.http.put<Contact>(this.contactsUrl + '/contact', contact, this.httpOptions)
+      .subscribe(value => this.reloadContacts());
+  }
+
+  remove(contactId: number) {
+    /*const index = CONTACTS.findIndex(value => value.id === contact.id);
+    CONTACTS.slice(index, 1);*/
+
+     this.http.delete(this.contactsUrl + '/contact/' + contactId, this.httpOptions )
+       .subscribe(value => this.reloadContacts());
+
   }
 }

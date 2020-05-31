@@ -10,14 +10,19 @@ import {Contact} from './model/contact';
 })
 export class AppComponent implements OnInit{
   title = 'Contacts';
-  contacts: Contact[];
+ // contacts: Contact[];
+  contactToEditFromAppComp: Contact;
 
   constructor(public contactService: ContactService) {
   }
 
   ngOnInit(): void {
-   // this.contactService.getAll()
-     this.contactService.getContacts()
-      .subscribe(value => this.contacts = value);
+     /* this.contactService.getContacts()
+      .subscribe(value => this.contacts = value);*/
+  }
+
+  onEditItem($event: Contact) {
+    this.contactToEditFromAppComp = Object.assign([], $event);
+
   }
 }

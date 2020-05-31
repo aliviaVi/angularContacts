@@ -1,48 +1,58 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Contact} from '../model/contact';
 import {ContactService} from '../service/contact.service';
+import {ContactEventService} from "../service/contact-event.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.css']
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent implements OnInit, OnDestroy {
 
   contact: Contact;
-  contacts: Contact[];
 
   isAddingState: boolean;
 
+  editContactSub: Subscription;
 
-  constructor(private contactService: ContactService) {
+  constructor(private contactService: ContactService,
+              private contactEventService: ContactEventService) {
 
   }
 
   ngOnInit(): void {
-    this.isAddingState = true;
-    this.contact = new Contact();
+  this.clearForm();
+  this.editContactSub= this.contactEventService.subscribeEditContact((value)=>this.onEditContact(value));
   }
+
+  ngOnDestroy(): void {
+   this.editContactSub.unsubscribe();
+  }
+
   onClickAdd(){
     console.log(this.contact);
     this.contactService.addContact(this.contact)
     this.clearForm();
-
-     // .subscribe(value => this.clearForm());
   }
 
-  /*onClickAdd() {
-    console.log(this.contact);
-    this.contactService.add(this.contact);
-  }*/
   clearForm(){
     this.contact = new Contact();
+    this.isAddingState = true;
   }
 
+  onClickEdit() {
+   this.contactService.edit(this.contact);
+   this.clearForm();
+  }
 
-  onClickGetAll() {
-    this.contactService.getContacts()
-      .subscribe(value => this.contacts = value);
-    console.log(this.contacts);
+  onClickCancel() {
+    this.clearForm();
+  }
+
+  onEditContact(value: Contact){
+    this.contact = value;
+    this.isAddingState = false;
   }
 }
